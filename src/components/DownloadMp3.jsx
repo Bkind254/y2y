@@ -8,7 +8,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/download-audio",
+        "https://y2y-ypvj.onrender.com/download-audio",
         {
           url: videoUrl,
           title: title,

@@ -6,7 +6,7 @@ const DownloadMp4 = ({ videoUrl, title }) => {
     event.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/download", {
+      const res = await fetch("https://y2y-ypvj.onrender.com/download", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
