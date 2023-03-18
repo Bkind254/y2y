@@ -1,0 +1,22 @@
+.mp4button {
+  position: relative;
+  display: inline-block;
+  padding: 3%;
+  color: #fff;
+  background: #180505;
+  font-size: 13px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  margin: 7px;
+  letter-spacing: 1px;
+  border-radius: 0.6rem;
+  z-index: 1;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  .mp4button {
+    font-size: 10px;
+  }
+}

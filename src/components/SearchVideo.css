@@ -1,0 +1,270 @@
+* {
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: cursive;
+  height: 100%;
+}
+
+.app {
+  padding: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: whitesmoke;
+  min-height: 100%;
+  position: relative;
+}
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 0.9px;
+  background: linear-gradient(
+    90deg,
+    rgb(255, 0, 0) 20%,
+    rgba(153, 0, 0, 0) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+h2 {
+  font-family: sans-serif;
+  font-weight: 550;
+}
+
+.search {
+  width: 65%;
+  margin: 3rem 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3rem;
+  background: #ff0000;
+
+  box-shadow: 5px 5px 7px #6b6b6b, -5px -5px 7px #6e7174;
+}
+
+.search input {
+  flex: 1;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0.5rem;
+  border-radius: 3rem;
+  outline: none;
+  color: #000000;
+  background: #ffffff;
+}
+
+.search input::placeholder {
+  color: #969696;
+  font-size: medium;
+}
+
+.search-button {
+  background: #180505;
+  position: relative;
+  display: inline-block;
+  padding: 8px 18px;
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  margin: 7px;
+  letter-spacing: 2px;
+  border-radius: 0.6rem;
+  z-index: 1; /* Set a higher z-index value */
+  cursor: pointer;
+}
+
+.search-button:hover {
+  /*
+  background: #180505;*/
+  color: #180505;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.container {
+  width: 65%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(255, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2.5rem;
+  background-color: white;
+  padding: 1.5rem;
+}
+
+p {
+  padding: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  word-spacing: 2px;
+}
+
+.info {
+  width: 70%;
+  border-width: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .search {
+    padding: 0.5rem 0.2rem;
+    width: 80%;
+  }
+  .app {
+    padding: 4rem 1rem;
+  }
+
+  .search input {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  button {
+    padding: 5px 7px;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .info {
+    width: 100%;
+  }
+
+  .video-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .search {
+    padding: 0.5rem 0rem;
+    width: 100%;
+  }
+  .app {
+    padding: 4rem 1rem;
+  }
+
+  .search input {
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 5px 7px;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .info {
+    width: 100%;
+  }
+
+  .video-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .app {
+    padding: 4rem 1rem;
+  }
+
+  .search {
+    padding: 0.5rem 0.5rem;
+    width: 100%;
+  }
+
+  .search input {
+    font-size: 1rem;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .info {
+    width: 100%;
+  }
+
+  .video-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .search {
+    width: 110%;
+  }
+
+  .search input {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    margin-right: -6rem;
+  }
+
+  .search-button {
+    padding: 3px 2px;
+    right: 0.8rem;
+    margin-left: 2rem;
+    background-color: #6e7174;
+    color: #fff;
+  }
+
+  .search input::placeholder {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .search {
+    width: 121%;
+  }
+  .search-button {
+    padding: 3px 2px;
+    right: 0.5rem;
+    margin-left: 2rem;
+  }
+
+  .search input {
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 270px) {
+  .video-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
