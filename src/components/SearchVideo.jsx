@@ -38,7 +38,7 @@ function SearchVideos() {
     <div className="app">
       <div className="container">
         <h1>Y2Y</h1>
-        <h2>Download Audio and Video from YouTube </h2>
+        <h2>Download Mp3 and Mp4 from YouTube </h2>
 
         <form className="search" onSubmit={handleSubmit}>
           <input
@@ -65,7 +65,7 @@ function SearchVideos() {
         </div>
       </div>
       <div className="info">
-        <h2>Youtube Mp3 and Mp4 Downloader</h2>
+        <h2>Youtube Audio and Video Downloader</h2>
         <p>
           Y2you empowers you to download captivating audio and video content
           from YouTube's vast repository. This cutting-edge platform seamlessly

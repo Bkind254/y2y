@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./DownloadMp3.css";
 
 const DownloadMp3 = ({ videoUrl, title }) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const handleDownload = async (event) => {
     event.preventDefault();
 
     try {
+      setIsDownloading(true);
       const response = await axios.post(
         "https://y2y-ypvj.onrender.com/download-audio",
         {
@@ -29,6 +32,8 @@ const DownloadMp3 = ({ videoUrl, title }) => {
     } catch (err) {
       console.error(err);
     }
+
+    setIsDownloading(false);
   };
 
   return (
@@ -36,6 +41,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
       <button className="mp3button" type="submit">
         Download MP3
       </button>
+      {isDownloading && <p>Downloading Mp3...</p>}
     </form>
   );
 };

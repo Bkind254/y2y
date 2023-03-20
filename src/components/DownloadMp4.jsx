@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DownloadMp4.css";
 
 const DownloadMp4 = ({ videoUrl, title }) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const handleDownload = async (event) => {
     event.preventDefault();
 
     try {
+      setIsDownloading(true);
       const res = await fetch("https://y2y-ypvj.onrender.com/download", {
         method: "POST",
         headers: {
@@ -19,13 +22,15 @@ const DownloadMp4 = ({ videoUrl, title }) => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `${title}.mp4`;
+      a.download = `y2y.${title}.mp4`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
     }
+
+    setIsDownloading(false);
   };
 
   return (
@@ -33,6 +38,7 @@ const DownloadMp4 = ({ videoUrl, title }) => {
       <button className="mp4button" type="submit">
         Download Mp4
       </button>
+      {isDownloading && <p>Downloading Mp4...</p>}
     </form>
   );
 };
