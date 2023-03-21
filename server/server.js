@@ -19,9 +19,10 @@ app.post("/download", async (req, res) => {
   });
 
   const video = ytdl(url, { format });
+  const sanitizedTitle = info.videoDetails.title.replace(/[^\w\s.]/gi, "");
   res.header(
     "Content-Disposition",
-    `attachment; filename="${info.videoDetails.title}.${format.container}"`
+    `attachment; filename="${sanitizedTitle}.${format.container}"`
   );
   video.pipe(res);
 });
@@ -36,9 +37,11 @@ app.post("/download-audio", async (req, res) => {
   });
   const audio = ytdl(url, { format });
 
+  const sanitizedTitle = info.videoDetails.title.replace(/[^\w\s.]/gi, "");
+
   res.header(
     "Content-Disposition",
-    `attachment; filename="${info.videoDetails.title}.${format.container}"`
+    `attachment; filename="${sanitizedTitle}.${format.container}"`
   );
 
   audio.pipe(res);
