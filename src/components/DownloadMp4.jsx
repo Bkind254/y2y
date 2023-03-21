@@ -9,7 +9,7 @@ const DownloadMp4 = ({ videoUrl, title }) => {
 
     try {
       setIsDownloading(true);
-      const res = await fetch("https://y2y-ypvj.onrender.com/download", {
+      const res = await fetch("http://localhost:3000/download", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const DownloadMp4 = ({ videoUrl, title }) => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `y2y.${title}.mp4`;
+      a.download = `${title}.mp4`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);

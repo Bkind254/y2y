@@ -3,7 +3,7 @@ const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
 const ffmpegPath = "/usr/bin/ffmpeg";
-/*const ffmpegPath = "C:/PATH_Programs/ffmpeg.exe";*/
+//const ffmpegPath = "C:/PATH_Programs/ffmpeg.exe";
 const ffmpeg = require("fluent-ffmpeg");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -24,11 +24,29 @@ app.post("/download", async (req, res) => {
   });
 
   const video = ytdl(url, { format });
-  res.header(
-    "Content-Disposition",
-    `attachment; filename="${info.videoDetails.title}.${format.container}"`
-  );
-  video.pipe(res);
+  const fileSize = parseInt(format.contentLength);
+  const range = req.headers.range;
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunksize = end - start + 1;
+    const head = {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunksize,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(206, head);
+    video.pipe(res);
+  } else {
+    const head = {
+      "Content-Length": fileSize,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(200, head);
+    video.pipe(res);
+  }
 });
 
 app.post("/download-audio", async (req, res) => {
