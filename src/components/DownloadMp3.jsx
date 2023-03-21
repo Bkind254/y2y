@@ -11,7 +11,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
     try {
       setIsDownloading(true);
       const response = await axios.post(
-        "http://localhost:3000/download",
+        "https://y2y-ypvj.onrender.com/download-audio",
         {
           url: videoUrl,
           title: title,
@@ -25,7 +25,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `y2y-${title}.mp3`;
+      a.download = `y2y.${title}.mp3`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);

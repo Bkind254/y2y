@@ -2,11 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
-const ffmpegPath = "/usr/bin/ffmpeg";
-//const ffmpegPath = "C:/PATH_Programs/ffmpeg.exe";
-const ffmpeg = require("fluent-ffmpeg");
-
-ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 app.use(cors());
@@ -34,24 +29,19 @@ app.post("/download", async (req, res) => {
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
-  const format = ytdl.filterFormats(info.formats, "audioonly")[0];
+  const format = ytdl.chooseFormat(info.formats, {
+    filter: "audio",
+    quality: "highestaudio",
+    format: "mp3",
+  });
   const audio = ytdl(url, { format });
-
-  const converter = ffmpeg(audio)
-    .toFormat("mp3")
-    .on("error", (err) => {
-      console.log("An error occurred: " + err.message);
-    })
-    .on("end", () => {
-      console.log("Audio conversion complete");
-    });
 
   res.header(
     "Content-Disposition",
-    `attachment; filename="${info.videoDetails.title}.mp3"`
+    `attachment; filename="${info.videoDetails.title}.${format.container}"`
   );
 
-  converter.pipe(res);
+  audio.pipe(res);
 });
 
 app.listen(3000, () => {
