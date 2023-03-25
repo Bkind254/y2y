@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
-const fs = require("fs");
 const bodyParser = require("body-parser");
 const ffmpegPath = "/usr/bin/ffmpeg";
 const ffmpeg = require("fluent-ffmpeg");
@@ -56,28 +55,7 @@ app.post("/download-audio", async (req, res) => {
 
   converter.pipe(res);
 });
-/*
-app.post("/download-audio", async (req, res) => {
-  const url = req.body.url;
-  const info = await ytdl.getInfo(url);
-  const format = ytdl.chooseFormat(info.formats, {
-    filter: "audioonly",
-    quality: "highestaudio",
-    format: "mp3",
-  });
-  const audio = ytdl(url, { format });
 
-  const sanitizedTitle = info.videoDetails.title.replace(/[^\w\s.]/gi, "");
-
-  res.header("Content-Type", "audio/mpeg");
-  res.header(
-    "Content-Disposition",
-    `attachment; filename="${sanitizedTitle}.mp3"`
-  );
-
-  audio.pipe(res);
-});
-*/
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
