@@ -3,7 +3,10 @@ const cors = require("cors");
 const ytdl = require("ytdl-core");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const ffmpeg = require("ffmpeg-static");
+const ffmpegPath = "/usr/bin/ffmpeg";
+const ffmpeg = require("fluent-ffmpeg");
+
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 app.use(cors());
@@ -31,48 +34,27 @@ app.post("/download", async (req, res) => {
 
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
-  const info = await ytdl.getBasicInfo(url);
-  const format = ytdl.chooseFormat(info.formats, {
-    quality: "highestaudio",
-    filter: "audioonly",
-    format: "mp3",
-  });
-  const audioStream = await ytdl(url, { format });
-  const audioFilePath = `./${info.videoDetails.videoId}.mp3`;
+  const info = await ytdl.getInfo(url);
+  const format = ytdl.filterFormats(info.formats, "audioonly")[0];
+  const audio = ytdl(url, { format });
 
-  audioStream.pipe(fs.createWriteStream(audioFilePath));
+  const sanitizedTitle = info.videoDetails.title.replace(/[^\w\s.]/gi, "");
 
-  audioStream.on("end", async () => {
-    try {
-      const ffmpegProcess = await spawn(ffmpeg, [
-        "-i",
-        audioFilePath,
-        "-vn",
-        "-acodec",
-        "libmp3lame",
-        "-qscale:a",
-        "2",
-        "-f",
-        "mp3",
-        "-",
-      ]);
-      res.set({
-        "Content-Type": "audio/mpeg",
-        "Content-Disposition": `attachment; filename="${info.videoDetails.title}.mp3"`,
-      });
-      ffmpegProcess.stdout.pipe(res);
-      ffmpegProcess.on("error", (err) => {
-        console.error(`Error converting audio to MP3: ${err}`);
-        res.status(500).send("Error converting audio to MP3");
-      });
-      ffmpegProcess.on("close", () => {
-        console.log("Conversion complete");
-      });
-    } catch (error) {
-      console.error(`Error starting ffmpeg process: ${error}`);
-      res.status(500).send("Error starting ffmpeg process");
-    }
-  });
+  const converter = ffmpeg(audio)
+    .toFormat("mp3")
+    .on("error", (err) => {
+      console.log("An error occurred: " + err.message);
+    })
+    .on("end", () => {
+      console.log("Audio conversion complete");
+    });
+
+  res.header(
+    "Content-Disposition",
+    `attachment; filename="${sanitizedTitle}.mp3"`
+  );
+
+  converter.pipe(res);
 });
 /*
 app.post("/download-audio", async (req, res) => {
