@@ -6,7 +6,7 @@ import { BsTwitter } from "react-icons/bs";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <h2>y2you.com</h2>
+      <h2>y2yu</h2>
 
       <div className="icons">
         <ul>
