@@ -31,7 +31,7 @@ app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
   const format = ytdl.chooseFormat(info.formats, {
-    filter: "audio",
+    filter: "audioonly",
     quality: "highestaudio",
     format: "mp3",
   });
