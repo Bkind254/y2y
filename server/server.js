@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
+const { spawn } = require("child_process");
 
 const app = express();
 app.use(cors());
@@ -27,6 +28,44 @@ app.post("/download", async (req, res) => {
   video.pipe(res);
 });
 
+app.post("/download-audio", (req, res) => {
+  const url = req.body.url;
+
+  // Spawn an ffmpeg process to convert the video to MP3 format
+  const ffmpeg = spawn("ffmpeg", [
+    "-i",
+    url,
+    "-vn",
+    "-acodec",
+    "libmp3lame",
+    "-qscale:a",
+    "2",
+    "-f",
+    "mp3",
+    "-",
+  ]);
+
+  // Set the content type of the response to audio/mpeg
+  res.set({
+    "Content-Type": "audio/mpeg",
+    "Content-Disposition": 'attachment; filename="audio.mp3"',
+  });
+
+  // Pipe the output of the ffmpeg process to the response
+  ffmpeg.stdout.pipe(res);
+
+  // Handle any errors that occur during the conversion process
+  ffmpeg.on("error", (err) => {
+    console.error(`Error converting video to MP3: ${err}`);
+    res.status(500).send("Error converting video to MP3");
+  });
+
+  // Log a message when the conversion is complete
+  ffmpeg.on("close", () => {
+    console.log("Conversion complete");
+  });
+});
+/*
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
@@ -47,7 +86,7 @@ app.post("/download-audio", async (req, res) => {
 
   audio.pipe(res);
 });
-
+*/
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
