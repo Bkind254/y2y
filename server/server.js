@@ -34,7 +34,7 @@ app.post("/download-audio", async (req, res) => {
   const info = await ytdl.getBasicInfo(url);
   const format = ytdl.chooseFormat(info.formats, {
     filter: "audioonly",
-    quality: "highestaudio",
+    format: "mp3",
   });
   const audioStream = await ytdl(url, { format });
   const audioFilePath = `./${info.videoDetails.videoId}.mp3`;
