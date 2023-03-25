@@ -39,9 +39,10 @@ app.post("/download-audio", async (req, res) => {
 
   const sanitizedTitle = info.videoDetails.title.replace(/[^\w\s.]/gi, "");
 
+  res.header("Content-Type", "audio/mpeg");
   res.header(
     "Content-Disposition",
-    `attachment; filename="${sanitizedTitle}.${format.container}"`
+    `attachment; filename="${sanitizedTitle}.mp3"`
   );
 
   audio.pipe(res);
