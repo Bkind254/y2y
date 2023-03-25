@@ -28,13 +28,22 @@ app.post("/download", async (req, res) => {
   video.pipe(res);
 });
 
-app.post("/download-audio", (req, res) => {
+app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
 
-  // Spawn an ffmpeg process to convert the video to MP3 format
+  // Get information about the video
+  const info = await ytdl.getInfo(url);
+
+  // Choose the audio format that is most compatible with mobile devices
+  const format = ytdl.chooseFormat(info.formats, {
+    filter: "audioonly",
+    quality: "highestaudio",
+  });
+
+  // Spawn an ffmpeg process to convert the audio to MP3 format
   const ffmpeg = spawn("ffmpeg", [
     "-i",
-    url,
+    format.url,
     "-vn",
     "-acodec",
     "libmp3lame",
@@ -48,7 +57,7 @@ app.post("/download-audio", (req, res) => {
   // Set the content type of the response to audio/mpeg
   res.set({
     "Content-Type": "audio/mpeg",
-    "Content-Disposition": 'attachment; filename="audio.mp3"',
+    "Content-Disposition": `attachment; filename="${info.videoDetails.title}.mp3"`,
   });
 
   // Pipe the output of the ffmpeg process to the response
@@ -56,16 +65,15 @@ app.post("/download-audio", (req, res) => {
 
   // Handle any errors that occur during the conversion process
   ffmpeg.on("error", (err) => {
-    console.error(`Error converting video to MP3: ${err}`);
-    res.status(500).send("Error converting video to MP3");
+    console.error(`Error converting audio to MP3: ${err}`);
+    res.status(500).send("Error converting audio to MP3");
   });
 
   // Log a message when the conversion is complete
   ffmpeg.on("close", () => {
     console.log("Conversion complete");
   });
-});
-/*
+}); /*
 app.post("/download-audio", async (req, res) => {
   const url = req.body.url;
   const info = await ytdl.getInfo(url);
