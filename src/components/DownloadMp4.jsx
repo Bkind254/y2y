@@ -39,7 +39,7 @@ const DownloadMp4 = ({ videoUrl, title }) => {
     if (isDownloading) {
       interval = setInterval(() => {
         setDotCount((prevDotCount) => (prevDotCount + 1) % 4);
-      }, 1000);
+      }, 500);
     }
     return () => clearInterval(interval);
   }, [isDownloading]);

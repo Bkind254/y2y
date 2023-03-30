@@ -26,7 +26,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `${title}.mp3`;
+      a.download = `y2y.${title}.mp3`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -41,7 +41,7 @@ const DownloadMp3 = ({ videoUrl, title }) => {
     if (isDownloading) {
       interval = setInterval(() => {
         setDotCount((prevDotCount) => (prevDotCount + 1) % 4);
-      }, 1000);
+      }, 500);
     }
     return () => clearInterval(interval);
   }, [isDownloading]);
