@@ -67,8 +67,8 @@ function SearchVideos() {
       <div className="info">
         <h2>Youtube Audio and Video Downloader</h2>
         <p>
-          Y2you empowers you to download captivating audio and video content
-          from YouTube's vast repository. This cutting-edge platform seamlessly
+          Y2yu empowers you to download captivating audio and video content from
+          YouTube's vast repository. This cutting-edge platform seamlessly
           fetches the finest MP3 audio format and video downloads, enabling you
           to access a plethora of riveting videos at no cost.
         </p>

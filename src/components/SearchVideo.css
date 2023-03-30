@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: whitesmoke;
+  background-color: white;
   min-height: 100%;
   position: relative;
 }
@@ -103,7 +103,7 @@ h2 {
   align-items: center;
   flex-direction: column;
   margin: 2.5rem;
-  background-color: white;
+  background-color: #cfcfcf;
   padding: 1.5rem;
 }
 

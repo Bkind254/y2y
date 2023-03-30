@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DownloadMp4.css";
 
 const DownloadMp4 = ({ videoUrl, title }) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [dotCount, setDotCount] = useState(0);
 
   const handleDownload = async (event) => {
     event.preventDefault();
@@ -33,12 +34,22 @@ const DownloadMp4 = ({ videoUrl, title }) => {
     setIsDownloading(false);
   };
 
+  useEffect(() => {
+    let interval;
+    if (isDownloading) {
+      interval = setInterval(() => {
+        setDotCount((prevDotCount) => (prevDotCount + 1) % 4);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isDownloading]);
+
   return (
     <form onSubmit={handleDownload}>
       <button className="mp4button" type="submit">
         Download Mp4
       </button>
-      {isDownloading && <p>Downloading Mp4...</p>}
+      {isDownloading && <p>Downloading{".".repeat(dotCount)}</p>}
     </form>
   );
 };
