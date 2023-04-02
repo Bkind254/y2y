@@ -65,7 +65,7 @@ function SearchVideos() {
         </div>
       </div>
       <div className="info">
-        <h2>Youtube Audio and Video Downloader</h2>
+        <h2>Youtube Downloader</h2>
         <p>
           Y2yu empowers you to download captivating audio and video content from
           YouTube's vast repository. This cutting-edge platform seamlessly

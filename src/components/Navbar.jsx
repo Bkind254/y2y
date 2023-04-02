@@ -1,13 +1,13 @@
 import React from "react";
 import "./Navbar.css";
-import { ImInstagram } from "react-icons/im";
-import { BsTwitter } from "react-icons/bs";
+//import { ImInstagram } from "react-icons/im";
+//import { BsTwitter } from "react-icons/bs";
 
 const Navbar = () => {
   return (
     <div className="navbar">
       <h2>y2yu.com</h2>
-
+      {/*
       <div className="icons">
         <ul>
           <a
@@ -25,7 +25,7 @@ const Navbar = () => {
             <ImInstagram />
           </a>
         </ul>
-      </div>
+  </div>*/}
     </div>
   );
 };
