@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const bodyParser = require("body-parser");
-const ffmpegPath = "/usr/bin/ffmpeg";
-//const ffmpegPath = "C:\\PATH_Programs\\ffmpeg";
+//const ffmpegPath = "/usr/bin/ffmpeg";
+const ffmpegPath = "C:\\PATH_Programs\\ffmpeg";
 const ffmpeg = require("fluent-ffmpeg");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
